@@ -3,6 +3,7 @@ const webpack = require('webpack');
 
 const SRC = path.resolve(__dirname, 'src');
 const PUBLIC = path.resolve(__dirname, 'public');
+const NODE_MODULES = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
 	entry: path.join(SRC, 'index.js'),
@@ -13,10 +14,22 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.jsx?$/,
-			exclude: /node_modules/,
+			exclude: [NODE_MODULES],
 			use: [{
 				loader: 'babel-loader'
 			}]
+		}, {
+			test: /\.json$/,
+			use: [{
+				loader: 'json-loader'
+			}]
 		}]
+	},
+	resolve: {
+		modules: [
+			path.resolve(__dirname, 'samples'),
+			SRC,
+			NODE_MODULES
+		]
 	}
 };
