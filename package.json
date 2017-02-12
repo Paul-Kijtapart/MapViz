@@ -22,6 +22,9 @@
   },
   "homepage": "https://github.com/Paul-Kijtapart/MapViz#readme",
   "dependencies": {
+    "d3": "^4.5.0",
+    "jquery": "^3.1.1",
+    "leaflet": "^1.0.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
@@ -34,9 +37,13 @@
   },
   "babel": {
     "presets": [
-      "react", ["es2015", {
-        "modules": false
-      }]
+      "react",
+      [
+        "es2015",
+        {
+          "modules": false
+        }
+      ]
     ]
   }
 }
