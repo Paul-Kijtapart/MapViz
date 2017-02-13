@@ -1,4 +1,4 @@
-var INDUSTRIAL = {
+{
 	"type": "FeatureCollection",
 	"crs": {
 		"type": "name",
@@ -3802,6 +3802,4 @@ var INDUSTRIAL = {
 			]
 		}
 	}]
-};
-
-export default INDUSTRIAL;
+}

@@ -1,4 +1,4 @@
-var AGRICULTURAL = {
+{
 	"type": "FeatureCollection",
 	"crs": {
 		"type": "name",
@@ -484,6 +484,4 @@ var AGRICULTURAL = {
 			]
 		}
 	}]
-};
-
-export default AGRICULTURAL;
+}

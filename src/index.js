@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // components
-import App from './components/Map.js';
+import App from './components/App.js';
 
 // Json Data
 import map_locations from 'maps/map.json';
