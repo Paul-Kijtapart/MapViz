@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js"></script>
+<script src="samples/maps/map.js"></script>
+<script src="samples/maps/nw/AGRICULTURAL.js"></script>
+<script src="samples/maps/nw/APARTMENT-HIGH.js"></script>
+<script src="samples/maps/nw/APARTMENT-LOW.js"></script>
+<script src="samples/maps/nw/COMMERCIAL.js"></script>
+<script src="samples/maps/nw/DUPLEX.js"></script>
+<script src="samples/maps/nw/INDUSTRIAL.js"></script>
+<script src="samples/maps/nw/INSTITUTIONAL.js"></script>
+<script src="samples/maps/nw/MIXED.js"></script>
+<script src="samples/maps/nw/SINGLE.js"></script>
+<script src="samples/maps/nw/TOWNHOUSE.js"></script>
+<script src="samples/maps/nw/UNZONED.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<link href="https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css" rel="stylesheet" />
+</head>
+<body>
+<div id='map' style='width: 800px; height: 600px;'></div>
+<script>
+  var mapboxAccessToken = 'pk.eyJ1IjoibmFwb24iLCJhIjoiY2l6MzdneThwMDUwbjJ3bjE0a2QxanB1NyJ9.2zlCnkvfXLp5AAfoMbeQSQ';
+  var map = L.map('map', null, { zoomControl: false }).setView([49.207, -122.912], 13);
+  map.dragging.disable();
+  map.zoomControl.disable();
+  map.touchZoom.disable();
+  map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable();
+  map.boxZoom.disable();
+  map.keyboard.disable();
+
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {id: 'mapbox.light'}).addTo(map);
+  
+  function style(feature) {
+    var neighborhoodID = feature.properties.NEIGHNUM;
+    console.log(feature.properties.NEIGHNUM + "-" + feature.properties.NEIGH_NAME);
+    var color = '#' + neighborhoodID + '00026';
+    return {
+      fillColor: color,
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
+    };
+  }
+
+  function style2(feature) {
+    var color = '#F0'+ feature.properties.Name.length % 9 +'F26';
+    console.log(feature)
+    return {
+      fillColor: color,
+      weight: 2,
+      opacity: 0,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
+    };
+  }
+
+  //L.geoJson(NEIBOURHOODS, {style: style}).addTo(map); // less specific tiles
+    
+  L.geoJson(APARTMENT_HIGH, {style: style2}).addTo(map);
+  L.geoJson(APARTMENT_LOW, {style: style2}).addTo(map);
+  L.geoJson(COMMERCIAL, {style: style2}).addTo(map);
+  L.geoJson(DUPLEX, {style: style2}).addTo(map);
+  L.geoJson(INDUSTRIAL, {style: style2}).addTo(map);
+  L.geoJson(INSTITUTIONAL, {style: style2}).addTo(map);
+  L.geoJson(SINGLE, {style: style2}).addTo(map);
+  L.geoJson(TOWNHOUSE, {style: style2}).addTo(map);
+    L.geoJson(UNZONED, {style: style2}).addTo(map);
+    L.geoJson(AGRICULTURAL, {style: style2}).addTo(map);
+    L.geoJson(MIXED, {style: style2}).addTo(map);
+
+  $('.leaflet-control-zoom').css('visibility', 'hidden');
+
+</script>
+</body>
+</html>
