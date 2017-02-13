@@ -40,60 +40,61 @@ class App extends React.Component {
 		const mapboxAccessToken = 'pk.eyJ1IjoibmFwb24iLCJhIjoiY2l6MzdneThwMDUwbjJ3bjE0a2QxanB1NyJ9.2zlCnkvfXLp5AAfoMbeQSQ';
 		const position = [49.207, -122.912];
 		const map = (
-			<Map id="main_map" 
-				center={position} 
+			<Map id="main_map"
+				center={position}
 				zoom={13}
 				zoomControl={false}
 				touchZoom={false}
 				doubleClickZoom={false}
 				scrollWheelZoom={false}
 				boxZoom={false}
-				dragging={false} >
+				dragging={false}
+				style={{width: "800px", height: "600px"}}>
 					<TileLayer
 	      				url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken}
 	   					id="mapbox.light"
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={AGRICULTURAL}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={APARTMENT_HIGH}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={APARTMENT_LOW}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={COMMERCIAL}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={DUPLEX}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={INDUSTRIAL}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={INSTITUTIONAL}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={MIXED}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={SINGLE}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={TOWNHOUSE}
 	   					style={this.style_2}
 	   				/>
-	   				<GeoJSON 
+	   				<GeoJSON
 	   					data={UNZONED}
 	   					style={this.style_2}
 	   				/>
