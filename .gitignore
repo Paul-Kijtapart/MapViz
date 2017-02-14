@@ -1,9 +1,14 @@
 # Created by D-Plan
 
 public/index.js
+public/index.css
 index.css
 
 # Created by https://www.gitignore.io/api/node
+
+### Sass ###
+.sass-cache/
+*.css.map
 
 ### Node ###
 # Logs
