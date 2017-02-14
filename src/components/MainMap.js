@@ -24,12 +24,30 @@ class MainMap extends React.Component {
 		var color = '#F0' + feature.properties.Name.length % 9 + 'F26';
 		return {
 			fillColor: color,
-			weight: 2,
+			weight: 3,
 			opacity: 0,
-			color: 'white',
-			dashArray: '3',
+			color: 'grey',
+			dashArray: '',
 			fillOpacity: 0.7
 		};
+	}
+
+	setupInteraction(feature, layer) {
+		layer.on({
+			mouseover: function(e) {
+		    var layer = e.target;
+		    layer.setStyle({opacity: 1});
+		    layer.bringToFront();
+			},
+      mouseout: function(e) {
+				e.target.setStyle({opacity: 0});
+      },
+      click: function(e) {
+      	var type = e.target.feature.properties.Name;
+      	var coords = e.target.feature.geometry.coordinates[0];
+      	this.props.onZoneSelected(type, coords);
+      }.bind(this)
+		});
 	}
 
 	render() {
@@ -54,46 +72,57 @@ class MainMap extends React.Component {
 	   				<GeoJSON
 	   					data={AGRICULTURAL}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={APARTMENT_HIGH}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={APARTMENT_LOW}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={COMMERCIAL}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={DUPLEX}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={INDUSTRIAL}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={INSTITUTIONAL}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={MIXED}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={SINGLE}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={TOWNHOUSE}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 	   				<GeoJSON
 	   					data={UNZONED}
 	   					style={this.style_2}
+	   					onEachFeature={this.setupInteraction.bind(this)}
 	   				/>
 			</Map>);
 	}
