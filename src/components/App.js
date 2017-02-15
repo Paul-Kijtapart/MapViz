@@ -24,8 +24,8 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="mapApp">
-				<MainMap onZoneSelected={this.onZoneSelected.bind(this)} />
-        <InfoBox selectedZone={this.state.selectedZone} />
+				<MainMap onZoneSelected={(type, coords) => {console.log('onzoneselected'); this.onZoneSelected(type, coords)}} />
+                          <InfoBox selectedZone={this.state.selectedZone} />
 			</div>
 		);
 	}

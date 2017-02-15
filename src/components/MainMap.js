@@ -53,6 +53,7 @@ class MainMap extends React.Component {
 	render() {
 		const mapboxAccessToken = 'pk.eyJ1IjoibmFwb24iLCJhIjoiY2l6MzdneThwMDUwbjJ3bjE0a2QxanB1NyJ9.2zlCnkvfXLp5AAfoMbeQSQ';
 		const position = [49.207, -122.912];
+		const featureFn = (feature, layer) => { this.setupInteraction(feature, layer)};
 		return (
 			<Map id="main_map"
 				className="mainMap"
@@ -65,64 +66,63 @@ class MainMap extends React.Component {
 				boxZoom={false}
 				dragging={false}
 				style={{width: '800px', height: '600px'}}>
-					<TileLayer
-	      			url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken}
-	   					id="mapbox.light"
-	   				/>
+				<TileLayer
+	      				url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken}
+	   				id="mapbox.light"/>
 	   				<GeoJSON
 	   					data={AGRICULTURAL}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={APARTMENT_HIGH}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={APARTMENT_LOW}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={COMMERCIAL}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={DUPLEX}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={INDUSTRIAL}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={INSTITUTIONAL}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={MIXED}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={SINGLE}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={TOWNHOUSE}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={UNZONED}
 	   					style={this.style_2}
-	   					onEachFeature={this.setupInteraction.bind(this)}
+	   					onEachFeature={featureFn}
 	   				/>
 			</Map>);
 	}
