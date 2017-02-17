@@ -6,6 +6,7 @@ class InfoBox extends React.Component {
     if (this.props.selectedZone) {
       return (
         <div>
+          ID: {this.props.selectedZone.id}<br />
           Type: {this.props.selectedZone.type}<br />
           Coordinates: {this.props.selectedZone.coords}
         </div>

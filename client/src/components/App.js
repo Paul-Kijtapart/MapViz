@@ -14,18 +14,18 @@ class App extends React.Component {
     };
   }
 
-  onZoneSelected(type, coords) {
+  onZoneSelected(id, type, coords) {
     this.setState({
       zones: this.state.zones,
-      selectedZone: {type: type, coords: coords}
+      selectedZone: {id: id, type: type, coords: coords}
     });
   }
 
 	render() {
 		return (
 			<div className="mapApp">
-				<MainMap onZoneSelected={(type, coords) => {console.log('onzoneselected'); this.onZoneSelected(type, coords)}} />
-                          <InfoBox selectedZone={this.state.selectedZone} />
+				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
+        <InfoBox selectedZone={this.state.selectedZone} />
 			</div>
 		);
 	}

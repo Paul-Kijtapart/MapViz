@@ -43,9 +43,10 @@ class MainMap extends React.Component {
 				e.target.setStyle({opacity: 0});
       },
       click: function(e) {
+      	var id = e.target.feature.id;
       	var type = e.target.feature.properties.Name;
       	var coords = e.target.feature.geometry.coordinates[0];
-      	this.props.onZoneSelected(type, coords);
+      	this.props.onZoneSelected(id, type, coords);
       }.bind(this)
 		});
 	}
