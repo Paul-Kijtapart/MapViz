@@ -18,6 +18,10 @@ $susy: (
 /* Makes border-box properties */
 @include border-box-sizing;
 
+#root {
+	background-color: $black_0;
+}
+
 .mapApp {
 	@include container(1140px);
 	@include clearfix; /* Adding a clearfix because all children elements are floated */
@@ -30,5 +34,6 @@ $susy: (
 
 .infoBox {
 	@include span(full);
+	background-color: $black_3;
 }
 
