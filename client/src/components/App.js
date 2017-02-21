@@ -17,18 +17,22 @@ class App extends React.Component {
   onZoneSelected(id, type, coords) {
     this.setState({
       zones: this.state.zones,
-      selectedZone: {id: id, type: type, coords: coords}
+      selectedZone: {
+        id: id,
+        type: type,
+        coords: coords
+      }
     });
   }
 
-	render() {
-		return (
-			<div className="mapApp">
+  render() {
+    return (
+      <div className="mapApp">
 				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
         <InfoBox selectedZone={this.state.selectedZone} />
 			</div>
-		);
-	}
+    );
+  }
 };
 
 export default App;

@@ -1,10 +1,34 @@
-@import "compass/reset";
+@import "normalize";
+@import 'compass';
+@import 'susy';
+@import 'breakpoint';
 
 // Constants
 @import "./variables";
 
 
+// Change Susy Default Global Setting
+$susy: (
+	columns: 12, 
+	gutters: 1/4,
+	math: fluid,
+	global-box-sizing: border-box 
+	);
+
+/* Makes border-box properties */
+@include border-box-sizing;
+
+.mapApp {
+	@include container(1140px);
+	@include clearfix; /* Adding a clearfix because all children elements are floated */
+}
+
 #main_map {
-	width: 980px;
+	@include span(full);
 	height: 600px;
 }
+
+.infoBox {
+	@include span(full);
+}
+
