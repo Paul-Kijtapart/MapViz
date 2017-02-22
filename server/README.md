@@ -29,9 +29,20 @@ Create Environment
 Install Django  
 `pip install django`
 
+Install DB adapter
+`pip install psycopg2`
+
+Create DB and user (file Service Ticket with DB Admin, Napon) 
+`createdb mapviz`
+
+Migrations
+`cd server/mysite/`
+`python manage.py migrate`
+
 To activate virtualenv next time   
 `source $WORKONHOME/venv/bin/activate`
 
 
 ### Running locally  
+`cd server/mysite/`
 `python manage.py runserver`
