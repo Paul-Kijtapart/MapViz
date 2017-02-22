@@ -26,6 +26,9 @@ class Incident(models.Model):
     count = models.IntegerField()
     zone_name = models.ForeignKey(Zone, on_delete=models.CASCADE)
 
+    def __unicode__( self ):
+        return "INCIDENT: name {0} latlon ({1},{2}), year {3}, count{4}".format( self.name, self.lat, self.lon, self.year, self.count)
+
 class Institution(models.Model):
     name = models.CharField(max_length=30)
     lat = models.FloatField()
