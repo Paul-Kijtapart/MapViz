@@ -50,26 +50,3 @@ class GeoUtils:
       i = next
       condition = (i != 0)
     return count&1
-
-''' TESTS '''
-''' run python GeoUtils.py '''
-# polygon1 = [(0, 0), (10, 0), (10, 10), (0, 10)]
-# p = (20, 20)
-# print ("Yes \n" if GeoUtils().isInside(polygon1, p) else "No \n")
-
-# p = (5, 5)
-# print ("Yes \n" if GeoUtils().isInside(polygon1, p) else "No \n")
-
-# polygon2 = [(0, 0), (5, 5), (5, 0)]
-# p = (3, 3)
-# print ("Yes \n" if GeoUtils().isInside(polygon2, p) else "No \n")
-
-# p = (5, 1)
-# print ("Yes \n" if GeoUtils().isInside(polygon2, p) else "No \n")
-
-# p = (8, 1)
-# print ("Yes \n" if GeoUtils().isInside(polygon2, p) else "No \n")
-
-# polygon3 = [(0, 0), (10, 0), (10, 10), (0, 10)]
-# p = (-1,10);
-# print ("Yes \n" if GeoUtils().isInside(polygon3, p) else "No \n")
