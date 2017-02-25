@@ -78,5 +78,5 @@ class Command(BaseCommand):
             lat = lat_lon[0]
             lon = lat_lon[1]
             coordinate = \
-                Coordinate(name=id, lat=lat, lon=lon)
-            coordinate.save()
+                Coordinate(lat=lat, lon=lon)
+            print(coordinate)

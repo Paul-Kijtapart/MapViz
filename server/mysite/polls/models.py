@@ -11,6 +11,9 @@ class Coordinate(models.Model):
     name = models.ForeignKey(Zone, on_delete=models.CASCADE)
     lat = models.FloatField()
     lon = models.FloatField()
+    def __str__(self):
+        return ' at (' + str(self.lat)  + ' , ' + str(self.lon) + ') '
+
 
 class Score(models.Model):
     name = models.IntegerField()
