@@ -45,8 +45,10 @@ class Command(BaseCommand):
                     inc.lat = float(row[3])
                     inc.year = row[8]
 
-
-                    if (self.isIncidentInZone(inc, zone_name_to_polygon_dict)):
+                    matched_zone = GeoUtils().isIncidentInPolygon((inc.lat, inc.lon), zone_name_to_polygon_dict)
+                    if (matched_zone != None):
+                        inc.zone_name = matched_zone
+                        pprint(inc)
                         valid_incident_rows.append(inc)
 
             pprint(valid_incident_rows)
@@ -65,12 +67,3 @@ class Command(BaseCommand):
                 zone_name_to_polygon_dict[key].append(location)
         return zone_name_to_polygon_dict
 
-    def isIncidentInZone(self, inc, zone_name_to_polygon_dict):
-        for zone_name in zone_name_to_polygon_dict:
-            current_polygon = zone_name_to_polygon_dict[zone_name]
-            if (GeoUtils().isInside(current_polygon, (inc.lat, inc.lon))):
-                matched_zone = Zone.objects.get(pk=zone_name)
-                inc.zone_name = matched_zone
-                print(inc)
-                return True
-        return False

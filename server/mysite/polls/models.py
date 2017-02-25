@@ -40,3 +40,10 @@ class Institution(models.Model):
     lat = models.FloatField()
     lon = models.FloatField()
     zone_name = models.ForeignKey(Zone, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name + '. lat ' + str(self.lat) + ' lon ' + str(self.lon) + " is in zone name " + str(self.zone_name.name)
+
+
+
+

@@ -8,6 +8,9 @@ Source: http://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a
 
 import math
 
+from polls.models import Zone
+
+
 class GeoUtils:
   INFINITY = 10000
 
@@ -66,3 +69,19 @@ class GeoUtils:
   def distance(self, polygon, p):
     center = self.__getCentroid(polygon)
     return math.sqrt((p[0] - center[0])**2 + (p[1] - center[1])**2)
+
+
+
+  def isIncidentInPolygon(self, location_tuple, zone_name_to_polygon_dict):
+    '''
+    Return the Zone contains the location_tuple
+    :param location_tuple:
+    :param zone_name_to_polygon_dict:
+    :return: matched_zone
+    '''
+    for zone_name in zone_name_to_polygon_dict:
+      current_polygon = zone_name_to_polygon_dict[zone_name]
+      if (self.isInside(current_polygon, location_tuple)):
+        matched_zone = Zone.objects.get(pk=zone_name)
+        return matched_zone
+    return None
