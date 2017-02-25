@@ -24,9 +24,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # zone_name_to_polygon_dict = self.get_zone_name_to_polygon_dict()
+        #
+        # with open('temp.py', 'w') as write_file:
+        #     pickle.dump(zone_name_to_polygon_dict, write_file)
 
-        with open('temp.py', 'rb') as read_destination:
-            zone_name_to_polygon_dict = pickle.load(read_destination)
+        with open('temp.py', 'r') as read_file:
+            zone_name_to_polygon_dict = pickle.load(read_file)
+
 
         valid_incident_rows = []
 
@@ -52,8 +56,8 @@ class Command(BaseCommand):
         coordinate_rows = Coordinate.objects.all()
         zone_name_to_polygon_dict = {}
         for c_row in coordinate_rows:
-            key = c_row.name
-            location = (c_row.lat, c_row.lon)
+            key = c_row.name.name
+            location = (c_row.lon, c_row.lat)
             if (key in zone_name_to_polygon_dict):
                 zone_name_to_polygon_dict[key].append(location)
             else:
@@ -63,14 +67,9 @@ class Command(BaseCommand):
 
     def isIncidentInZone(self, inc, zone_name_to_polygon_dict):
         for zone_name in zone_name_to_polygon_dict:
-            current_polygon = map(lambda t: (t[1], t[0]), zone_name_to_polygon_dict[zone_name])
-            # pprint(current_polygon)
-            # pprint(str(inc.lat) + ' , ' + str(inc.lon))
-            # pprint(zone_name)
-            # pprint(zone_name.name)
-
+            current_polygon = zone_name_to_polygon_dict[zone_name]
             if (GeoUtils().isInside(current_polygon, (inc.lat, inc.lon))):
-                matched_zone = Zone.objects.get(pk=zone_name.name)
+                matched_zone = Zone.objects.get(pk=zone_name)
                 inc.zone_name = matched_zone
                 print(inc)
                 return True
