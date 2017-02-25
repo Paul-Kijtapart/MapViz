@@ -11,7 +11,7 @@ ZONES = path.join(MYSITE, 'raw_data', 'zones')
 
 # Models
 from polls.models import Coordinate
-
+from polls.models import Zone
 
 class Command(BaseCommand):
     help = 'Load initial Coordinate data into Coordinate Table'
@@ -74,9 +74,17 @@ class Command(BaseCommand):
             self.stderr.write("missing id or locations")
             return
 
+        # For current zone, load coordinates
+        zone = Zone()
+        zone.name = feature["id"]
+        zone.zone_type = feature["properties"]["Name"]
+        zone.save() ###
+        print("**** created zone:", zone)
+
         for lat_lon in locations:
             lat = lat_lon[0]
             lon = lat_lon[1]
             coordinate = \
-                Coordinate(lat=lat, lon=lon)
-            print(coordinate)
+                Coordinate(name=zone, lat=lat, lon=lon)
+            coordinate.save() ###
+            print("added", coordinate)
