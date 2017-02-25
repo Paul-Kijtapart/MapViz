@@ -39,5 +39,11 @@ class TestGeoUtils(unittest.TestCase):
         p = (-121.2, 28.2)
         self.assertFalse(GeoUtils().isInside(polygon4, p))
 
+
+    def testDistance1(self):
+        polygon = [(0,0), (0,4), (4,0), (4,4)]
+        p = (2, 10)
+        self.assertEqual(GeoUtils().distance(polygon, p), 8)
+
 if __name__ == '__main__':
     unittest.main()

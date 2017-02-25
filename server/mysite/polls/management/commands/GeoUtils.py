@@ -54,5 +54,15 @@ class GeoUtils:
       condition = (i != 0)
     return count&1
 
-  def distance(self, p1, p2):
-    return math.hypot(p2.lat - p1.lat, p2.lon - p1.lon)
+  def __getCentroid(self, polygon):
+    x, y = zip(*polygon)
+    l = len(x)
+    return sum(x) / l, sum(y) / l
+
+  ''' Calculate distance between a polygon and a point
+      polygons is a list of coordinate tuples
+      p is the coordinate point tuple
+  '''
+  def distance(self, polygon, p):
+    center = self.__getCentroid(polygon)
+    return math.sqrt((p[0] - center[0])**2 + (p[1] - center[1])**2)
