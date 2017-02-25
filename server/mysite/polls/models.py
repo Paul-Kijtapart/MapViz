@@ -7,12 +7,15 @@ class Zone(models.Model):
     name = models.IntegerField(primary_key=True)
     zone_type = models.CharField(max_length=30)
 
+    def __str__(self):
+        return "ZONE " + str(self.name) + " TYPE: " + str(self.zone_type)
+
 class Coordinate(models.Model):
     name = models.ForeignKey(Zone, on_delete=models.CASCADE)
     lat = models.FloatField()
     lon = models.FloatField()
     def __str__(self):
-        return ' at ( lat : ' + str(self.lat)  + ' , lon : ' + str(self.lon) + ') '
+        return str(self.name) + ' at ( lat : ' + str(self.lat)  + ' , lon : ' + str(self.lon) + ') '
 
 
 class Score(models.Model):
