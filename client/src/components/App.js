@@ -4,6 +4,7 @@ import $ from 'jquery';
 // Components
 import MainMap from 'components/MainMap.js';
 import InfoBox from 'components/InfoBox.js';
+import FieldSelection from 'components/FieldSelection.js';
 
 class App extends React.Component {
   constructor() {
@@ -17,18 +18,23 @@ class App extends React.Component {
   onZoneSelected(id, type, coords) {
     this.setState({
       zones: this.state.zones,
-      selectedZone: {id: id, type: type, coords: coords}
+      selectedZone: {
+        id: id,
+        type: type,
+        coords: coords
+      }
     });
   }
 
-	render() {
-		return (
-			<div className="mapApp">
+  render() {
+    return (
+      <div className="mapApp">
 				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
+        <FieldSelection />
         <InfoBox selectedZone={this.state.selectedZone} />
 			</div>
-		);
-	}
+    );
+  }
 };
 
 export default App;
