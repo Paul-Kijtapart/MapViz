@@ -25,27 +25,25 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # zone_name_to_polygon_dict = self.get_zone_name_to_polygon_dict()
 
-        # with open('temp.py', 'wb') as write_file:
-        #     pickle.dump(zone_name_to_polygon_dict, write_file)
-
         with open('temp.py', 'rb') as read_destination:
             zone_name_to_polygon_dict = pickle.load(read_destination)
-
-        # pprint(zone_name_to_polygon_dict)
 
         valid_incident_rows = []
 
         with open(CRASHES, 'rb') as csvfile:
             reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
-            print("im inside.")
             for idx, row in enumerate(reader):
+                if idx == 2:
+                    break
+
                 if idx != 0 and len(row) != 0:
                     inc = Incident()
                     inc.count = row[1]
                     inc.name = "CRASH"
-                    inc.lat = float(row[3])
-                    inc.lon = float(row[6])
+                    inc.lon = float(row[3])
+                    inc.lat = float(row[6])
                     inc.year = row[8]
+
 
                     if (self.isIncidentInZone(inc, zone_name_to_polygon_dict)):
                         valid_incident_rows.append(inc)
@@ -58,7 +56,7 @@ class Command(BaseCommand):
         zone_name_to_polygon_dict = {}
         for c_row in coordinate_rows:
             key = c_row.name
-            location = (float(c_row.lat), float(c_row.lon))
+            location = (c_row.lat, c_row.lon)
             if (key in zone_name_to_polygon_dict):
                 zone_name_to_polygon_dict[key].append(location)
             else:
@@ -69,8 +67,12 @@ class Command(BaseCommand):
     def isIncidentInZone(self, inc, zone_name_to_polygon_dict):
         for zone_name in zone_name_to_polygon_dict:
             current_polygon = zone_name_to_polygon_dict[zone_name]
+            pprint(current_polygon)
+            pprint('lat : ' + str(inc.lat))
+            pprint('lon : ' + str(inc.lon))
             if (GeoUtils().isInside(current_polygon, (inc.lat, inc.lon))):
                 matched_zone = Zone.objects.get(pk=zone_name)
                 inc.zone_name = matched_zone
+                print(inc)
                 return True
         return False

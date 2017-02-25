@@ -1,5 +1,5 @@
 import unittest
-from GeoUtils import GeoUtils
+from .GeoUtils import GeoUtils
 
 class TestGeoUtils(unittest.TestCase):
 
