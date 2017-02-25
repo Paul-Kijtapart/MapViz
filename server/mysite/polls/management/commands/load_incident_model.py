@@ -15,7 +15,6 @@ ZONE_NAME_TO_POLYGON_PATH = \
 
 # Models
 from polls.models import Incident
-from polls.models import Zone
 from polls.models import Coordinate
 
 
@@ -30,7 +29,6 @@ class Command(BaseCommand):
 
         with open(ZONE_NAME_TO_POLYGON_PATH, 'r') as read_file:
             zone_name_to_polygon_dict = pickle.load(read_file)
-        valid_incident_rows = []
 
         with open(CRASHES, 'rb') as csvfile:
             reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
@@ -57,11 +55,7 @@ class Command(BaseCommand):
                     matched_zone = GeoUtils().isIncidentInPolygon((inc.lat, inc.lon), zone_name_to_polygon_dict)
                     if (matched_zone != None):
                         inc.zone_name = matched_zone
-                        pprint(inc)
-                        valid_incident_rows.append(inc)
-
-            pprint(valid_incident_rows)
-
+                        inc.save()
 
     def get_zone_name_to_polygon_dict(self):
         coordinate_rows = Coordinate.objects.all()

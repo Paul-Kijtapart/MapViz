@@ -28,7 +28,6 @@ class Command(BaseCommand):
         zone_name_to_polygon_dict = pickle.load(read_file)
 
     def parseInstitutions(self, reader, name_index, lat_index, lon_index):
-        valid_incident_rows = []
         for idx, row in enumerate(reader):
             if idx == 3:
                 break
@@ -42,8 +41,7 @@ class Command(BaseCommand):
                 matched_zone = GeoUtils().isIncidentInPolygon((ins.lat, ins.lon), self.zone_name_to_polygon_dict)
                 if (matched_zone != None):
                     ins.zone_name = matched_zone
-                    pprint(ins)
-                    valid_incident_rows.append(ins)
+                    ins.save()
 
     def handle(self, *args, **options):
         with open(POLICE, 'rb') as csvfile:
