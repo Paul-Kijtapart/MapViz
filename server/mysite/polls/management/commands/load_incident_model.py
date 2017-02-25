@@ -5,8 +5,6 @@ import mysite
 from .GeoUtils import GeoUtils
 from pprint import pprint
 import pickle
-import polls
-# import codecs
 
 # Raw Data Path names
 MYSITE = mysite.__path__[0]
@@ -32,16 +30,25 @@ class Command(BaseCommand):
 
         with open(ZONE_NAME_TO_POLYGON_PATH, 'r') as read_file:
             zone_name_to_polygon_dict = pickle.load(read_file)
-
-
         valid_incident_rows = []
 
         with open(CRASHES, 'rb') as csvfile:
             reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
+            # Normalize values
+            minCount = 1000
+            maxCount = 0
+            for idx, row in enumerate(reader):
+                if idx != 0 and len(row) != 0:
+                    count = int(row[1])
+                    minCount = min(minCount, count)
+                    maxCount = max(maxCount, count)
+            # go back to beginning of file to start reading again
+            csvfile.seek(0)
+            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
             for idx, row in enumerate(reader):
                 if idx != 0 and len(row) != 0:
                     inc = Incident()
-                    inc.count = row[1]
+                    inc.count = self.normalize(int(row[1]), minCount, maxCount)
                     inc.name = "CRASH"
                     inc.lon = float(row[6])
                     inc.lat = float(row[3])
@@ -69,3 +76,5 @@ class Command(BaseCommand):
                 zone_name_to_polygon_dict[key].append(location)
         return zone_name_to_polygon_dict
 
+    def normalize(self, item, min_item, max_item):
+        return (item - min_item) / float(max_item - min_item)
