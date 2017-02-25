@@ -2,10 +2,11 @@ import pickle
 
 from django.core.management.base import BaseCommand, CommandError
 import csv
-from os import path
+from os import path, pardir
 import mysite
 from .GeoUtils import GeoUtils
 from pprint import pprint
+import polls
 
 # Raw Data Path names
 MYSITE = mysite.__path__[0]
@@ -14,6 +15,8 @@ POLICE = path.join(RAW_DATA_PATH, 'POLICE.csv')
 HOSPITALS = path.join(RAW_DATA_PATH, 'HOSPITALS.csv')
 SCHOOLS = path.join(RAW_DATA_PATH, 'SCHOOLS.csv')
 FIELDS = path.join(RAW_DATA_PATH, 'FIELDS.csv')
+ZONE_NAME_TO_POLYGON_PATH = \
+    path.join(path.abspath(path.join(mysite.__path__[0], pardir)), 'temp.py')
 
 # Models
 from polls.models import Institution
@@ -21,7 +24,7 @@ from polls.models import Institution
 
 class Command(BaseCommand):
     help = 'Load initial institution data into Institution Table'
-    with open('temp.py', 'r') as read_file:
+    with open(ZONE_NAME_TO_POLYGON_PATH, 'r') as read_file:
         zone_name_to_polygon_dict = pickle.load(read_file)
 
     def parseInstitutions(self, reader, name_index, lat_index, lon_index):
@@ -41,7 +44,6 @@ class Command(BaseCommand):
                     ins.zone_name = matched_zone
                     pprint(ins)
                     valid_incident_rows.append(ins)
-
 
     def handle(self, *args, **options):
         with open(POLICE, 'rb') as csvfile:

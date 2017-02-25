@@ -1,17 +1,19 @@
 from django.core.management.base import BaseCommand, CommandError
 import csv
-from os import path
+from os import path, pardir
 import mysite
 from .GeoUtils import GeoUtils
 from pprint import pprint
 import pickle
+import polls
 # import codecs
-
 
 # Raw Data Path names
 MYSITE = mysite.__path__[0]
 RAW_DATA_PATH = path.join(MYSITE, 'raw_data')
 CRASHES = path.join(RAW_DATA_PATH, 'CRASHES.csv')
+ZONE_NAME_TO_POLYGON_PATH = \
+    path.join(path.abspath(path.join(mysite.__path__[0], pardir)), 'temp.py')
 
 # Models
 from polls.models import Incident
@@ -28,7 +30,7 @@ class Command(BaseCommand):
         # with open('temp.py', 'w') as write_file:
         #     pickle.dump(zone_name_to_polygon_dict, write_file)
 
-        with open('temp.py', 'r') as read_file:
+        with open(ZONE_NAME_TO_POLYGON_PATH, 'r') as read_file:
             zone_name_to_polygon_dict = pickle.load(read_file)
 
 
