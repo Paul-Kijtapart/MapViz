@@ -5,6 +5,9 @@ Usage: GeoUtils().isInside(points, p) --> true | false
 
 Source: http://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a-polygon/
 '''
+
+import math
+
 class GeoUtils:
   INFINITY = 10000
 
@@ -50,3 +53,16 @@ class GeoUtils:
       i = next
       condition = (i != 0)
     return count&1
+
+  def __getCentroid(self, polygon):
+    x, y = zip(*polygon)
+    l = len(x)
+    return sum(x) / l, sum(y) / l
+
+  ''' Calculate distance between a polygon and a point
+      polygons is a list of coordinate tuples
+      p is the coordinate point tuple
+  '''
+  def distance(self, polygon, p):
+    center = self.__getCentroid(polygon)
+    return math.sqrt((p[0] - center[0])**2 + (p[1] - center[1])**2)
