@@ -6,9 +6,11 @@ from django.db import models
 class Zone(models.Model):
     name = models.IntegerField(primary_key=True)
     zone_type = models.CharField(max_length=30)
+    center_lat = models.FloatField()
+    center_lon = models.FloatField()
 
     def __str__(self):
-        return "ZONE " + str(self.name) + " TYPE: " + str(self.zone_type)
+        return "ZONE " + str(self.name) + " TYPE: " + str(self.zone_type) + " CENTER: (" + str(self.center_lat) + ", " + str(self.center_lon) + ")"
 
 class Coordinate(models.Model):
     name = models.ForeignKey(Zone, on_delete=models.CASCADE)
