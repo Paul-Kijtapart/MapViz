@@ -33,7 +33,7 @@ class Incident(models.Model):
     zone_name = models.ForeignKey(Zone, on_delete=models.CASCADE)
 
     def __unicode__( self ):
-        return "INCIDENT: name {0} latlon ({1},{2}), year {3}, count{4}".format( self.name, self.lat, self.lon, self.year, self.count)
+        return "INCIDENT: name {0} latlon ({1},{2}), year {3}, count{4}, zone_name{5}".format( self.name, self.lat, self.lon, self.year, self.count, self.zone_name.__str__())
 
 class Institution(models.Model):
     name = models.CharField(max_length=30)
