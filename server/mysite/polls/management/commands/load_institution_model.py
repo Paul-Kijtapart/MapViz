@@ -41,7 +41,11 @@ class Command(BaseCommand):
                 matched_zone = GeoUtils().isIncidentInPolygon((ins.lat, ins.lon), self.zone_name_to_polygon_dict)
                 if (matched_zone != None):
                     ins.zone_name = matched_zone
+                    pprint(ins)
                     ins.save()
+
+        self.stdout.write("Successfully Load Institution Model")
+
 
     def handle(self, *args, **options):
         with open(POLICE, 'rb') as csvfile:

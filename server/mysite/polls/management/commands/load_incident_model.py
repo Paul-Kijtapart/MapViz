@@ -55,7 +55,10 @@ class Command(BaseCommand):
                     matched_zone = GeoUtils().isIncidentInPolygon((inc.lat, inc.lon), zone_name_to_polygon_dict)
                     if (matched_zone != None):
                         inc.zone_name = matched_zone
+                        pprint(inc)
                         inc.save()
+            self.stdout.write("Successfully Load Incidental Model")
+
 
     def get_zone_name_to_polygon_dict(self):
         coordinate_rows = Coordinate.objects.all()
