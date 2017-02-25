@@ -35,26 +35,32 @@ class MainMap extends React.Component {
 	setupInteraction(feature, layer) {
 		layer.on({
 			mouseover: function(e) {
-		    var layer = e.target;
-		    layer.setStyle({opacity: 1});
-		    layer.bringToFront();
+				var layer = e.target;
+				layer.setStyle({
+					opacity: 1
+				});
+				layer.bringToFront();
 			},
-      mouseout: function(e) {
-				e.target.setStyle({opacity: 0});
-      },
-      click: function(e) {
-      	var id = e.target.feature.id;
-      	var type = e.target.feature.properties.Name;
-      	var coords = e.target.feature.geometry.coordinates[0];
-      	this.props.onZoneSelected(id, type, coords);
-      }.bind(this)
+			mouseout: function(e) {
+				e.target.setStyle({
+					opacity: 0
+				});
+			},
+			click: function(e) {
+				var id = e.target.feature.id;
+				var type = e.target.feature.properties.Name;
+				var coords = e.target.feature.geometry.coordinates[0];
+				this.props.onZoneSelected(id, type, coords);
+			}.bind(this)
 		});
 	}
 
 	render() {
 		const mapboxAccessToken = 'pk.eyJ1IjoibmFwb24iLCJhIjoiY2l6MzdneThwMDUwbjJ3bjE0a2QxanB1NyJ9.2zlCnkvfXLp5AAfoMbeQSQ';
 		const position = [49.207, -122.912];
-		const featureFn = (feature, layer) => { this.setupInteraction(feature, layer)};
+		const featureFn = (feature, layer) => {
+			this.setupInteraction(feature, layer)
+		};
 		return (
 			<Map id="main_map"
 				className="mainMap"
