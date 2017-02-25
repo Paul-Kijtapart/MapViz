@@ -5,6 +5,8 @@ import mysite
 from .GeoUtils import GeoUtils
 from pprint import pprint
 import pickle
+# import codecs
+
 
 # Raw Data Path names
 MYSITE = mysite.__path__[0]
@@ -23,6 +25,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # zone_name_to_polygon_dict = self.get_zone_name_to_polygon_dict()
 
+        # with open('temp.py', 'wb') as write_file:
+        #     pickle.dump(zone_name_to_polygon_dict, write_file)
+
         with open('temp.py', 'rb') as read_destination:
             zone_name_to_polygon_dict = pickle.load(read_destination)
 
@@ -30,8 +35,8 @@ class Command(BaseCommand):
 
         valid_incident_rows = []
 
-        with open(CRASHES, 'r') as csvfile:
-            reader = csv.reader(csvfile, delimiter=',')
+        with open(CRASHES, 'rb') as csvfile:
+            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
             for idx, row in enumerate(reader):
                 if idx != 0 and len(row) != 0:
                     inc = Incident()
@@ -45,6 +50,7 @@ class Command(BaseCommand):
                         valid_incident_rows.append(inc)
 
             pprint(valid_incident_rows)
+
 
     def get_zone_name_to_polygon_dict(self):
         coordinate_rows = Coordinate.objects.all()
@@ -67,6 +73,3 @@ class Command(BaseCommand):
                 inc.zone_name = matched_zone
                 return True
         return False
-
-
-
