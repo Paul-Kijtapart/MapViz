@@ -64,8 +64,13 @@ class Command(BaseCommand):
     def isIncidentInZone(self, inc, zone_name_to_polygon_dict):
         for zone_name in zone_name_to_polygon_dict:
             current_polygon = map(lambda t: (t[1], t[0]), zone_name_to_polygon_dict[zone_name])
+            # pprint(current_polygon)
+            # pprint(str(inc.lat) + ' , ' + str(inc.lon))
+            # pprint(zone_name)
+            # pprint(zone_name.name)
+
             if (GeoUtils().isInside(current_polygon, (inc.lat, inc.lon))):
-                matched_zone = Zone.objects.get(pk=zone_name)
+                matched_zone = Zone.objects.get(pk=zone_name.name)
                 inc.zone_name = matched_zone
                 print(inc)
                 return True
