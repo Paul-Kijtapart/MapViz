@@ -1,33 +1,19 @@
 from django.core.management.base import BaseCommand, CommandError
 import csv
-import json
 from os import path
 import mysite
 
 # Raw Data Path names
-MYSITE_PATH = mysite.__path__[0]
-RAW_DATA_PATH = path.join(MYSITE_PATH, 'raw_data')
-ZONES_PATH = path.join(RAW_DATA_PATH, 'zones')
-CRASHES = path.join(RAW_DATA_PATH,'CRASHES.csv')
-
-AGRICULTURAL = path.join(ZONES_PATH, 'AGRICULTURAL.json')
-
-
-
-
+MYSITE = mysite.__path__[0]
+RAW_DATA_PATH = path.join(MYSITE, 'raw_data')
+CRASHES = path.join(RAW_DATA_PATH, 'CRASHES.csv')
 
 # Models
 from polls.models import Incident
 
 
 class Command(BaseCommand):
-    help = 'Load initial data into DB'
-
-    def load_zone_data(self):
-        pass
-
-    def load_coordinate_data(self):
-        pass
+    help = 'Load initial Incident data into Incident Table'
 
     def handle(self, *args, **options):
         with open(CRASHES, 'rb') as csvfile:
