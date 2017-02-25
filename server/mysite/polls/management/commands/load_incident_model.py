@@ -37,6 +37,7 @@ class Command(BaseCommand):
 
         with open(CRASHES, 'rb') as csvfile:
             reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
+            print("im inside.")
             for idx, row in enumerate(reader):
                 if idx != 0 and len(row) != 0:
                     inc = Incident()
