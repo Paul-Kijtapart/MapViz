@@ -12,7 +12,7 @@ class Coordinate(models.Model):
     lat = models.FloatField()
     lon = models.FloatField()
     def __str__(self):
-        return ' at (' + str(self.lat)  + ' , ' + str(self.lon) + ') '
+        return ' at ( lat : ' + str(self.lat)  + ' , lon : ' + str(self.lon) + ') '
 
 
 class Score(models.Model):
