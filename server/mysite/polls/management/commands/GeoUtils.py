@@ -5,6 +5,9 @@ Usage: GeoUtils().isInside(points, p) --> true | false
 
 Source: http://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a-polygon/
 '''
+
+import math
+
 class GeoUtils:
   INFINITY = 10000
 
@@ -50,3 +53,6 @@ class GeoUtils:
       i = next
       condition = (i != 0)
     return count&1
+
+  def distance(self, p1, p2):
+    return math.hypot(p2.lat - p1.lat, p2.lon - p1.lon)
