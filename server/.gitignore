@@ -1,3 +1,5 @@
 .DS_Store
 *.py[cod]
 secret_config.py
+.idea/
+mysite/mysite/secret_config
