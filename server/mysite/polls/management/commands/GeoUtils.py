@@ -57,7 +57,9 @@ class GeoUtils:
       condition = (i != 0)
     return count&1
 
-  def __getCentroid(self, polygon):
+  ''' Calculate the center points given a list of points, polygon
+  '''
+  def getCentroid(self, polygon):
     x, y = zip(*polygon)
     l = len(x)
     return sum(x) / l, sum(y) / l
@@ -67,7 +69,7 @@ class GeoUtils:
       p is the coordinate point tuple
   '''
   def distance(self, polygon, p):
-    center = self.__getCentroid(polygon)
+    center = self.getCentroid(polygon)
     return math.sqrt((p[0] - center[0])**2 + (p[1] - center[1])**2)
 
 
