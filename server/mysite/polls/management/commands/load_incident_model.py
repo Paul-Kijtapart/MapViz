@@ -33,15 +33,12 @@ class Command(BaseCommand):
         with open(CRASHES, 'rb') as csvfile:
             reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
             for idx, row in enumerate(reader):
-                if idx == 2:
-                    break
-
                 if idx != 0 and len(row) != 0:
                     inc = Incident()
                     inc.count = row[1]
                     inc.name = "CRASH"
-                    inc.lon = float(row[3])
-                    inc.lat = float(row[6])
+                    inc.lon = float(row[6])
+                    inc.lat = float(row[3])
                     inc.year = row[8]
 
 
@@ -66,10 +63,7 @@ class Command(BaseCommand):
 
     def isIncidentInZone(self, inc, zone_name_to_polygon_dict):
         for zone_name in zone_name_to_polygon_dict:
-            current_polygon = zone_name_to_polygon_dict[zone_name]
-            pprint(current_polygon)
-            pprint('lat : ' + str(inc.lat))
-            pprint('lon : ' + str(inc.lon))
+            current_polygon = map(lambda t: (t[1], t[0]), zone_name_to_polygon_dict[zone_name])
             if (GeoUtils().isInside(current_polygon, (inc.lat, inc.lon))):
                 matched_zone = Zone.objects.get(pk=zone_name)
                 inc.zone_name = matched_zone
