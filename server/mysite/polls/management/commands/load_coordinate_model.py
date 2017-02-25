@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     geometry["coordinates"] == None):
             pprint("Missing coordinates")
             return None
-        return geometry["coordinates"]
+        return geometry["coordinates"][0];
 
     def getFeaturesList(self, data):
         if ("features" not in data or
