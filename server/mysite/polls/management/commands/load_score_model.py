@@ -19,11 +19,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         zones = Zone.objects.all()
-        i = 0
         for z in zones:
-            if i == 10:
-                break
-
             score = 0
             institutions = Institution.objects.all()
             for ins in institutions:
@@ -31,10 +27,6 @@ class Command(BaseCommand):
 
             incidents = Incident.objects.filter(zone_name=z.name).order_by('year')
 
-            pprint(incidents)
-            i += 1
-
-            '''
             s = None
             y = None
             for inc in incidents:
@@ -46,4 +38,4 @@ class Command(BaseCommand):
               s.name = z.name
               s.score = int(s.score) + (1/float(crash_count))
               pprint(s)
-            '''
+

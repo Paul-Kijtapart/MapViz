@@ -27,20 +27,32 @@ $susy: (
 	@include clearfix; 
 }
 
-#main_map {
+.mapSelection {
 	@include span(8 of 12);
 	@include clearfix;
+}
+
+.mapSelection_full {
+	@extend .mapSelection;
+	@include span(full);
+}
+
+#main_map {
 	height: 600px;
+	@include span(full);
+	@include clearfix;
+}
+
+.fieldSelection {
+	@include span(full);
+	@include clearfix;
 }
 
 .infoBox {
 	@include span(4 of 12 last);
+	display: none;
 	background-color: $black_3;
 }
 
-.fieldSelection {
-	@include span(8 of 12);
-	@include clearfix;
-}
 
 

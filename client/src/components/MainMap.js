@@ -4,6 +4,7 @@ import {
 	TileLayer,
 	GeoJSON
 } from 'react-leaflet';
+import $ from 'jquery';
 
 // JSON
 import AGRICULTURAL from 'maps/nw/AGRICULTURAL.json';
@@ -52,6 +53,11 @@ class MainMap extends React.Component {
 				var type = e.target.feature.properties.Name;
 				var coords = e.target.feature.geometry.coordinates[0];
 				this.props.onZoneSelected(id, type, coords);
+
+				var mapSelections = $('.mapSelection_full');
+				mapSelections.removeClass('mapSelection_full');
+				mapSelections.addClass('mapSelection');
+				$('.infoBox').show();
 			}
 		});
 	}
@@ -61,14 +67,11 @@ class MainMap extends React.Component {
 		const mapboxAccessToken = 'pk.eyJ1IjoibmFwb24iLCJhIjoiY2l6MzdneThwMDUwbjJ3bjE0a2QxanB1NyJ9.2zlCnkvfXLp5AAfoMbeQSQ';
 		const position = [49.207, -122.912];
 		const featureFn = (feature, layer) => {
-			this.setupInteraction(feature, layer)
-			layer.on({
-				click: this.displayInfoBox
-			})
+			this.setupInteraction(feature, layer);
 		};
 		return (
 			<Map id="main_map"
-				className="mainMap"
+				className="mainMap_full"
 				center={position}
 				zoom={13}
 				zoomControl={false}
