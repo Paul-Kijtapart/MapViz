@@ -24,6 +24,8 @@ class Score(models.Model):
     name = models.IntegerField()
     year = models.IntegerField()
     score = models.IntegerField()
+    def __str__(self):
+        return 'SCORE for zone: ' + str(self.name) + ' year: ' + str(self.year) + ' is ' + str(self.score)
 
 
 class Incident(models.Model):
