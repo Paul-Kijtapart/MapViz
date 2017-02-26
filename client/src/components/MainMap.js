@@ -5,6 +5,7 @@ import {
 	GeoJSON
 } from 'react-leaflet';
 import $ from 'jquery';
+import SentimentIcons from 'components/SentimentIcons.js'
 
 // JSON
 import AGRICULTURAL from 'maps/nw/AGRICULTURAL.json';
@@ -139,6 +140,7 @@ class MainMap extends React.Component {
 	   					style={this.style_2}
 	   					onEachFeature={featureFn}
 	   				/>
+	   				<SentimentIcons />
 			</Map>);
 	}
 };

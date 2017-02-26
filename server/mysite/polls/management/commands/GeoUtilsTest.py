@@ -1,7 +1,7 @@
-import unittest
-from .GeoUtils import GeoUtils
+from django.test import TestCase
+from GeoUtils import GeoUtils
 
-class TestGeoUtils(unittest.TestCase):
+class TestGeoUtils(TestCase):
 
     def test1(self):
         polygon1 = [(0, 0), (10, 0), (10, 10), (0, 10)]
@@ -39,11 +39,19 @@ class TestGeoUtils(unittest.TestCase):
         p = (-121.2, 28.2)
         self.assertFalse(GeoUtils().isInside(polygon4, p))
 
-
     def testDistance1(self):
-        polygon = [(0,0), (0,4), (4,0), (4,4)]
-        p = (2, 10)
-        self.assertEqual(GeoUtils().distance(polygon, p), 8)
+        # Expected value using http://boulter.com/gps/distance/
+        polygon = [(0.0,0.0), (0.0,4.0), (4.0,0.0), (4.0,4.0)]
+        p = (2.0, 10.0)
+        self.assertAlmostEqual(GeoUtils().distance(polygon, p), 890, delta=1.0)
+
+        polygon = [(-121.7, 28.5), (-121.5, 28.2), (-121.5, 28.7), (-121.2, 28.5)]
+        p = (-121.4, 28.6)
+        self.assertAlmostEqual(GeoUtils().distance(polygon, p), 11, delta=1.0)
+
+        p = (-121.2, 28.2)
+        self.assertAlmostEqual(GeoUtils().distance(polygon, p), 34, delta=1.0)
+
 
 if __name__ == '__main__':
     unittest.main()

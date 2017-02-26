@@ -6,10 +6,8 @@ Usage: GeoUtils().isInside(points, p) --> true | false
 Source: http://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a-polygon/
 '''
 
-import math
-
+from math import radians, sin, cos, sqrt, asin, acos
 from polls.models import Zone
-
 
 class GeoUtils:
   INFINITY = 10000
@@ -70,9 +68,23 @@ class GeoUtils:
   '''
   def distance(self, polygon, p):
     center = self.getCentroid(polygon)
-    return math.sqrt((p[0] - center[0])**2 + (p[1] - center[1])**2)
+    return self.distanceInKm(center, p)
 
+  ''' Calculate distance between a 2 coordinates using Haversine Formula
+      https://rosettacode.org/wiki/Haversine_formula#Python
+  '''
+  def distanceInKm(self, center, p):
+    R = 6372.8 # Earth radius in kilometers
 
+    dLat = radians(p[0] - center[0])
+    dLon = radians(p[1] - center[1])
+    lat1 = radians(center[0])
+    lat2 = radians(p[0])
+
+    a = sin(dLat/2)**2 + cos(lat1)*cos(lat2)*sin(dLon/2)**2
+    c = 2*asin(sqrt(a))
+
+    return R * c
 
   def isIncidentInPolygon(self, location_tuple, zone_name_to_polygon_dict):
     '''
