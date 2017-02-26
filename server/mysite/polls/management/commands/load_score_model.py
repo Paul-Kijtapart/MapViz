@@ -1,39 +1,34 @@
 from django.core.management.base import BaseCommand, CommandError
-import json
-from os import path
-from os import listdir
-import mysite
 from pprint import pprint
 from GeoUtils import *
 
 # Models
-from polls.models import Incident
-from polls.models import Coordinate
-from polls.models import Institution
-from polls.models import Zone
-from polls.models import Score
+from polls.models import Incident, Coordinate, Institution, Zone, Score
 
 class Command(BaseCommand):
   help = 'Calculate score Table'
 
   def handle(self, *args, **options):
+    Score.objects.all().delete()
     zones = Zone.objects.all()
-    for z in zones:
+    for zone in zones:
+      zone_name = zone.name
+      p1 = (zone.center_lat, zone.center_lon)
       score = 0
       institutions = Institution.objects.all()
       for ins in institutions:
-        score = score + 1 #TODO: dan function here
+        # score = weight * distance
+        # weight is base on the type of institution
+        # TODO add type column to institution table
+        p2 = (ins.lat, ins.lon)
+        score = GeoUtils().distance(p1, p2)
 
-      incidents = Incident.objects.filter(zone_name=z.name).order_by('year')
-      s = None
-      y = None
+      incidents = Incident.objects.filter(zone_name=zone_name)
       for inc in incidents:
-        crash_count = 1 if int(inc.count) == 0 else inc.count
-        s = Score()
-        s.score = score
-        y = int(inc.year)
-        s.year = y
-        s.name = z.name
-        s.score = int(s.score) + (1/float(crash_count))
-        pprint(s)
+        # score = weight * crash score
+        crash_score = 1 - inc.norm_count
+        score += crash_score
+        scoreObj = Score(name=zone_name, score=score, year=inc.year)
+        pprint(scoreObj)
+
 
