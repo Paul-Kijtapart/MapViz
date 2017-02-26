@@ -11,6 +11,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      year: 2013,
       zones: [],
       selectedZone: null
     };
@@ -27,12 +28,16 @@ class App extends React.Component {
     });
   }
 
+  onYearChange(year) {
+    this.setState({year: year});
+  }
+
   render() {
     return (
       <div className="mapApp">
         <div className='mapSelection'>
-  				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
-          <FieldSelection />
+  				<MainMap year={this.state.year} onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
+          <FieldSelection onYearChange={(year) => {this.onYearChange(year)}}/>
         </div>
         <div className="infoWrapper">
          <InfoBox selectedZone={this.state.selectedZone} />

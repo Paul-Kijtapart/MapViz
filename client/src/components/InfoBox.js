@@ -8,7 +8,7 @@ class InfoBox extends React.Component {
         <div className="infoBox">
           ID: {this.props.selectedZone.id}<br />
           Type: {this.props.selectedZone.type}<br />
-          Coordinates: {this.props.selectedZone.coords}
+          Neighbourhood condition: {this.props.selectedZone.coords}
         </div>
       );
     } else {

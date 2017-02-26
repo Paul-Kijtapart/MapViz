@@ -8,17 +8,22 @@ class FieldSelection extends React.Component {
 		super(props);
 		this.state = {
 			value: 2013,
-			reverseValue: 2013
+			reverseValue: 2013,
+			onYearChange: this.props.onYearChange
 		}
 
-		this.handleChangeReverse = this.handleChangeReverse.bind(this);
+		// this.handleChangeReverse = this.handleChangeReverse.bind(this);
 	}
 
 	handleChangeReverse(value) {
-		this.setState({
-			reverseValue: value
-		});
+		this.props.onYearChange(this.state.value)
 	}
+
+	handleOnChange(value) {
+    this.setState({
+      value
+    })
+  }
 
 	render() {
 		const {
@@ -40,10 +45,11 @@ class FieldSelection extends React.Component {
 		              min={2013}
 		              max={2016}
 		              step={1}
-		              value={reverseValue}
+		              value={value}
 		              labels={labels}
 		              orientation='horizontal'
-		              onChange={this.handleChangeReverse}
+									onChange={(val) => { this.handleOnChange(val) }}
+									onChangeComplete={() => { this.handleChangeReverse()}}
 					/>
 				</div>
 			</div>

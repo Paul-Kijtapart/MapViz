@@ -26,22 +26,31 @@ class MainMap extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			scores: []
+			scores: {},
+			oldYear: undefined
 		};
 	}
 
 	componentWillMount() {
-		this.fetch(2013);
+		this.fetch(this.props.year);
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		this.fetch(this.props.year);
 	}
 
 	fetch(year) {
-		$.ajax({
+		if (this.state.oldYear === year) return;
+		return $.ajax({
       url: "http://localhost:8000/polls/score/" + year,
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({scores: data});
-        console.log(data);
+      	let scores = {}
+      	data.map((d) => {
+      		scores[d.name] = d
+      	});
+        this.setState({scores: scores, oldYear: year});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(status, err);
@@ -50,7 +59,11 @@ class MainMap extends React.Component {
 	}
 
 	style_2(feature) {
-		var color = '#F0' + feature.properties.Name.length % 9 + 'F26';
+		var color = '#000000';
+		if (this.state.scores && this.state.scores[feature.id]) {
+			var score = this.state.scores[feature.id].score;
+			color = 'rgb(' + (255 - (score * 255/5)) + ',0,0)';
+		}
 		return {
 			fillColor: color,
 			weight: 3,
@@ -78,8 +91,15 @@ class MainMap extends React.Component {
 			click: (e) => {
 				var id = e.target.feature.id;
 				var type = e.target.feature.properties.Name;
-				var coords = e.target.feature.geometry.coordinates[0];
-				this.props.onZoneSelected(id, type, coords);
+				var score = this.state.scores[e.target.feature.id].score;
+				var dangerLevel = {
+					1: 'VERY SAFE',
+					2: 'SAFE',
+					3: 'NORMAL',
+					4: 'RISKY',
+					5: 'VERY DANGEROUS'
+				};
+				this.props.onZoneSelected(id, type, dangerLevel[score]);
 			}
 		});
 	}
@@ -91,6 +111,7 @@ class MainMap extends React.Component {
 		const featureFn = (feature, layer) => {
 			this.setupInteraction(feature, layer);
 		};
+		const colorFn = this.style_2.bind(this);
 		return (
 			<Map id="main_map"
 				className="mainMap_full"
@@ -108,57 +129,57 @@ class MainMap extends React.Component {
 	   				id="mapbox.light"/>
 	   				<GeoJSON
 	   					data={AGRICULTURAL}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={APARTMENT_HIGH}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={APARTMENT_LOW}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={COMMERCIAL}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={DUPLEX}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={INDUSTRIAL}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={INSTITUTIONAL}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={MIXED}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={SINGLE}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={TOWNHOUSE}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<GeoJSON
 	   					data={UNZONED}
-	   					style={this.style_2}
+	   					style={colorFn}
 	   					onEachFeature={featureFn}
 	   				/>
 	   				<SentimentIcons />
