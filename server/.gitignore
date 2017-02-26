@@ -3,3 +3,4 @@
 secret_config.py
 .idea/
 mysite/mysite/secret_config
+twitter_secret.py

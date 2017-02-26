@@ -5,6 +5,7 @@ import $ from 'jquery';
 import MainMap from 'components/MainMap.js';
 import InfoBox from 'components/InfoBox.js';
 import FieldSelection from 'components/FieldSelection.js';
+import TweetBox from 'components/TweetBox.js';
 
 class App extends React.Component {
   constructor() {
@@ -35,7 +36,7 @@ class App extends React.Component {
         </div>
         <div className="infoWrapper">
          <InfoBox selectedZone={this.state.selectedZone} />
-         <div className="sentimentInfo">Sentiment Info</div>
+         <TweetBox />
         </div>
 			</div>
     );

@@ -4,6 +4,7 @@ import {
 	TileLayer,
 	GeoJSON
 } from 'react-leaflet';
+import $ from 'jquery';
 import SentimentIcons from 'components/SentimentIcons.js'
 
 // JSON
@@ -21,6 +22,32 @@ import UNZONED from 'maps/nw/UNZONED.json';
 
 
 class MainMap extends React.Component {
+
+	constructor() {
+		super();
+		this.state = {
+			scores: []
+		};
+	}
+
+	componentWillMount() {
+		this.fetch(2013);
+	}
+
+	fetch(year) {
+		$.ajax({
+      url: "http://localhost:8000/polls/score/" + year,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({scores: data});
+        console.log(data);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(status, err);
+      }.bind(this)
+    });
+	}
 
 	style_2(feature) {
 		var color = '#F0' + feature.properties.Name.length % 9 + 'F26';
