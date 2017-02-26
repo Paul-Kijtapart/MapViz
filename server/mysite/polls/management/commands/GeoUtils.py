@@ -62,24 +62,16 @@ class GeoUtils:
     l = len(x)
     return sum(x) / l, sum(y) / l
 
-  ''' Calculate distance between a polygon and a point
-      polygons is a list of coordinate tuples
-      p is the coordinate point tuple
-  '''
-  def distance(self, polygon, p):
-    center = self.getCentroid(polygon)
-    return self.distanceInKm(center, p)
-
   ''' Calculate distance between a 2 coordinates using Haversine Formula
       https://rosettacode.org/wiki/Haversine_formula#Python
   '''
-  def distanceInKm(self, center, p):
+  def distance(self, p1, p2):
     R = 6372.8 # Earth radius in kilometers
 
-    dLat = radians(p[0] - center[0])
-    dLon = radians(p[1] - center[1])
-    lat1 = radians(center[0])
-    lat2 = radians(p[0])
+    dLat = radians(p2[0] - p1[0])
+    dLon = radians(p2[1] - p1[1])
+    lat1 = radians(p1[0])
+    lat2 = radians(p2[0])
 
     a = sin(dLat/2)**2 + cos(lat1)*cos(lat2)*sin(dLon/2)**2
     c = 2*asin(sqrt(a))
