@@ -20,10 +20,6 @@ import UNZONED from 'maps/nw/UNZONED.json';
 
 
 class MainMap extends React.Component {
-	construtor(props) {
-		super(props);
-		this.displayInfoBox = this.displayInfoBox.bind(this);
-	}
 
 	style_2(feature) {
 		var color = '#F0' + feature.properties.Name.length % 9 + 'F26';
@@ -56,7 +52,6 @@ class MainMap extends React.Component {
 				var type = e.target.feature.properties.Name;
 				var coords = e.target.feature.geometry.coordinates[0];
 				this.props.onZoneSelected(id, type, coords);
-				// this.displayInfoBox(e);
 			}
 		});
 	}
