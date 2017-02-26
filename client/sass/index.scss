@@ -24,16 +24,22 @@ $susy: (
 
 .mapApp {
 	@include container(1140px);
-	@include clearfix; /* Adding a clearfix because all children elements are floated */
+	@include clearfix; 
 }
 
 #main_map {
-	@include span(full);
+	@include span(8 of 12);
+	@include clearfix;
 	height: 600px;
 }
 
 .infoBox {
-	@include span(full);
+	@include span(4 of 12 last);
 	background-color: $black_3;
+}
+
+.fieldSelection {
+	@include span(8 of 12);
+	@include clearfix;
 }
 
