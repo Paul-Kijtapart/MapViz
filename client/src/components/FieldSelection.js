@@ -30,9 +30,9 @@ class FieldSelection extends React.Component {
 			<div className="fieldSelection">
 				<div className='slider-horizontal'>
 					<Slider
-		              min={0}
-		              max={100}
-		              step={10}
+		              min={2013}
+		              max={2016}
+		              step={1}
 		              value={reverseValue}
 		              orientation='horizontal'
 		              onChange={this.handleChangeReverse}
