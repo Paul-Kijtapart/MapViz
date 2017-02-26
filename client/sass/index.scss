@@ -9,10 +9,10 @@
 
 // Change Susy Default Global Setting
 $susy: (
-	columns: 12, 
+	columns: 12,
 	gutters: 1/4,
 	math: fluid,
-	global-box-sizing: border-box 
+	global-box-sizing: border-box
 	);
 
 /* Makes border-box properties */
@@ -37,3 +37,12 @@ $susy: (
 	background-color: $black_3;
 }
 
+.sentiment-positive {
+	border-radius: 12px;
+	background: green;
+}
+
+.sentiment-negative {
+	border-radius: 12px;
+	background: red;
+}
