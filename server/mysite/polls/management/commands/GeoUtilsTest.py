@@ -42,15 +42,17 @@ class TestGeoUtils(TestCase):
     def testDistance1(self):
         # Expected value using http://boulter.com/gps/distance/
         polygon = [(0.0,0.0), (0.0,4.0), (4.0,0.0), (4.0,4.0)]
-        p = (2.0, 10.0)
-        self.assertAlmostEqual(GeoUtils().distance(polygon, p), 890, delta=1.0)
+        p1 = GeoUtils().getCentroid(polygon)
+        p2 = (2.0, 10.0)
+        self.assertAlmostEqual(GeoUtils().distance(p1, p2), 890, delta=1.0)
 
         polygon = [(-121.7, 28.5), (-121.5, 28.2), (-121.5, 28.7), (-121.2, 28.5)]
-        p = (-121.4, 28.6)
-        self.assertAlmostEqual(GeoUtils().distance(polygon, p), 11, delta=1.0)
+        p1 = GeoUtils().getCentroid(polygon)
+        p2 = (-121.4, 28.6)
+        self.assertAlmostEqual(GeoUtils().distance(p1, p2), 11, delta=1.0)
 
-        p = (-121.2, 28.2)
-        self.assertAlmostEqual(GeoUtils().distance(polygon, p), 34, delta=1.0)
+        p2 = (-121.2, 28.2)
+        self.assertAlmostEqual(GeoUtils().distance(p1, p2), 34, delta=1.0)
 
 
 if __name__ == '__main__':

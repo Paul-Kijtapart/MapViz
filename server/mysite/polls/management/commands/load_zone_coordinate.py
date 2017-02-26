@@ -12,7 +12,7 @@ ZONES = path.join(MYSITE, 'raw_data', 'zones')
 # Models
 from polls.models import Coordinate
 from polls.models import Zone
-from GeoUtils import * 
+from GeoUtils import *
 
 class Command(BaseCommand):
     help = 'Load initial Coordinate data into Coordinate Table'
@@ -35,6 +35,9 @@ class Command(BaseCommand):
                     if (features == None):
                         self.stderr.write("Missing Features")
                         return
+
+                    Zone.objects.all.delete()
+                    Coordinate.objects.all.delete()
 
                     for f in features:
                         self.load_coordinate_row(f)
@@ -59,7 +62,7 @@ class Command(BaseCommand):
                     geometry["coordinates"] == None):
             pprint("Missing coordinates")
             return None
-        # map it from 3-point coordinates into 2-point coordinates 
+        # map it from 3-point coordinates into 2-point coordinates
         return map((lambda x: (x[0], x[1])),geometry["coordinates"][0]);
 
     def getFeaturesList(self, data):
@@ -91,5 +94,5 @@ class Command(BaseCommand):
             lon = lat_lon[1]
             coordinate = \
                 Coordinate(name=zone, lat=lat, lon=lon)
-            coordinate.save() 
+            coordinate.save()
             print("added", coordinate)

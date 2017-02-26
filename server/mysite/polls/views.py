@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from twitter_secret import client_key
 from twitter_secret import secret_key
@@ -13,11 +12,15 @@ import urllib2
 import tweepy
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return ("Hello, world. You're at the polls index.")
 
 def score(request, year):
-	data = serializers.serialize('json', Score.objects.filter(year=year))
-	return HttpResponse(data, content_type='application/json')
+  scores = Score.objects.filter(year=year)
+  # transform into simple objects without django internal props (eg. pk)
+  transformedScores = map(lambda s: \
+    {'name': s.name, 'year': s.year, 'score': s.score}, scores)
+  data = json.dumps(transformedScores)
+  return HttpResponse(data, content_type='application/json')
 
 def sentiment(request):
   return JsonResponse({'areas': Sentiment().getAreas()})
