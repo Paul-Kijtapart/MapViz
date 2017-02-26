@@ -7,8 +7,8 @@ class FieldSelection extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: 25,
-			reverseValue: 8
+			value: 2013,
+			reverseValue: 2013
 		}
 
 		this.handleChangeReverse = this.handleChangeReverse.bind(this);
@@ -26,6 +26,13 @@ class FieldSelection extends React.Component {
 			reverseValue
 		} = this.state;
 
+		const labels = {
+			2013: '2013',
+			2014: '2014',
+			2015: '2015',
+			2016: '2016'
+		};
+
 		return (
 			<div className="fieldSelection">
 				<div className='slider-horizontal'>
@@ -34,12 +41,11 @@ class FieldSelection extends React.Component {
 		              max={2016}
 		              step={1}
 		              value={reverseValue}
+		              labels={labels}
 		              orientation='horizontal'
 		              onChange={this.handleChangeReverse}
 					/>
-					<div className='value'>{reverseValue}</div>
 				</div>
-				<h1> I am fieldSelection. </h1>
 			</div>
 		);
 	}

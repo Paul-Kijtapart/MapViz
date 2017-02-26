@@ -16,11 +16,11 @@ class SentimentIcons extends React.Component {
   }
   componentDidMount() {
     this.fetch();
-    var interval = setInterval(() => {this.fetch()}, 7000);
-    this.setState({interval: interval, areas: this.state.areas});
+    // var interval = setInterval(() => {this.fetch()}, 7000);
+    // this.setState({interval: interval, areas: this.state.areas});
   }
   componentWillUnmount() {
-    clearInterval(this.state.interval);
+    // clearInterval(this.state.interval);
   }
   fetch() {
     $.ajax({
