@@ -26,7 +26,7 @@ class Command(BaseCommand):
     with open(ZONE_NAME_TO_POLYGON_PATH, 'r') as read_file:
         zone_name_to_polygon_dict = pickle.load(read_file)
 
-    def parseInstitutions(self, filename, quotechar, name_index, lat_index, lon_index):
+    def parseInstitutions(self, filename, quotechar, name_index, lat_index, lon_index, type_index):
          with open(filename, 'rb') as csvfile:
             # replace null byte
             reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar=quotechar)
@@ -37,6 +37,7 @@ class Command(BaseCommand):
                 ins.name = row[name_index]
                 ins.lon = float(row[lat_index])
                 ins.lat = float(row[lon_index])
+                ins.institution_type = row[type_index]
 
                 matched_zone = GeoUtils().isIncidentInPolygon((ins.lat, ins.lon), self.zone_name_to_polygon_dict)
                 if (matched_zone != None):
@@ -49,7 +50,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         Institution.objects.all().delete()
-        self.parseInstitutions(POLICE, None, 0, 33, 34)
-        self.parseInstitutions(HOSPITALS, '"', 0, 33, 34)
-        self.parseInstitutions(SCHOOLS, '"', 0, 33, 34)
-        self.parseInstitutions(FIELDS, '"', 2, 0, 1)
+        self.parseInstitutions(POLICE, None, 0, 33, 34, 0)
+        self.parseInstitutions(HOSPITALS, '"', 0, 33, 34, 0)
+        self.parseInstitutions(SCHOOLS, '"', 0, 33, 34, 0)
+        self.parseInstitutions(FIELDS, '"', 2, 0, 1, 2)
