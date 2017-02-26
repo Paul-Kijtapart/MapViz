@@ -42,7 +42,7 @@ class SentimentIcons extends React.Component {
   }
   render() {
     const displayArea = this.state.areas.map(function(area, index) {
-      const icon = Math.random() < 0.6?
+      const icon = Math.random() < 0.65?
         L.divIcon({className: 'sentiment-positive'}) :
         L.divIcon({className: 'sentiment-negative'});
       return <Marker key={index} position={area} icon={icon} />

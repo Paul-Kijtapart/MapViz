@@ -11,7 +11,7 @@ class TweetBox extends React.Component {
   }
 
   componentDidMount() {
-    //setInterval(()=>{this.fetch();}, 5000)
+    setInterval(()=>{this.fetch();}, 8000)
   }
 
   prettify(stringIn) {
