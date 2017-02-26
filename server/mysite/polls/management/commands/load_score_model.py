@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from pprint import pprint
 from .GeoUtils import GeoUtils
+from sets import Set
 
 # Models
 from polls.models import Incident, Coordinate, Institution, Zone, Score
@@ -13,6 +14,13 @@ class Command(BaseCommand):
       Score.objects.all().delete()
       scores = self.get_scores()
 
+    def get_years(self):
+      years = Set()
+      incidents = Incident.objects.all()
+      for inc in incidents:
+        years.add(inc.year)
+      return years
+
     def get_scores(self):
       zones = Zone.objects.all()
       scores = []
@@ -21,10 +29,15 @@ class Command(BaseCommand):
           zone_coord = (zone.center_lat, zone.center_lon)
           institution_score = self.get_inst_score_for_zone(zone_coord)
           years_to_crash_count_dict = self.get_year_to_crash_score_dict(zone_name)
-          for year, crash_score in years_to_crash_count_dict.iteritems():
-              total_score = crash_score + institution_score
-              score = Score(name=zone_name, score=total_score, year=year)
-              scores.append(score)
+          years = self.get_years()
+          for year in years:
+            if year in years_to_crash_count_dict:
+              crash_score = years_to_crash_count_dict[year]
+            else:
+              crash_score = 0.9 * len(years)
+            total_score = crash_score + institution_score
+            score = Score(name=zone_name, score=total_score, year=year)
+            scores.append(score)
 
       scale_min = 1
       scale_max = 5
