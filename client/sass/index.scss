@@ -9,10 +9,10 @@
 
 // Change Susy Default Global Setting
 $susy: (
-	columns: 12, 
+	columns: 12,
 	gutters: 1/4,
 	math: fluid,
-	global-box-sizing: border-box 
+	global-box-sizing: border-box
 	);
 
 /* Makes border-box properties */
@@ -20,20 +20,67 @@ $susy: (
 
 #root {
 	background-color: $black_0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }
 
 .mapApp {
 	@include container(1140px);
-	@include clearfix; /* Adding a clearfix because all children elements are floated */
+	@include clearfix;
 }
 
-#main_map {
+.mapSelection {
+	@include span(8 of 12);
+	@include clearfix;
+}
+
+.mapSelection_full {
+	@extend .mapSelection;
 	@include span(full);
+}
+
+
+#main_map {
 	height: 600px;
+	@include span(full);
+	@include clearfix;
+}
+
+.fieldSelection {
+	@include span(full);
+	@include clearfix;
 }
 
 .infoBox {
-	@include span(full);
+	height: 50%;
+	@include span(4 of 12 last);
 	background-color: $black_3;
 }
 
+.sentiment-positive {
+	border-radius: 12px;
+	background: green;
+}
+
+.sentiment-negative {
+	border-radius: 12px;
+	background: red;
+}
+
+.rangeslider__label {
+	margin-top: 30px;
+}
+
+.fieldSelection {
+	height: 100%;
+}
+
+.sentimentInfo {
+	margin-top: 10px;
+	width: 32.20339%;
+  float: right;
+  margin-right: 0;
+  background-color: #c6c6c6;
+  height: 30%;
+}

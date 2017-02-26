@@ -29,9 +29,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="mapApp">
-				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
-        <FieldSelection />
-        <InfoBox selectedZone={this.state.selectedZone} />
+        <div className='mapSelection'>
+  				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
+          <FieldSelection />
+        </div>
+        <div className="infoWrapper">
+         <InfoBox selectedZone={this.state.selectedZone} />
+         <div className="sentimentInfo">Sentiment Info</div>
+        </div>
 			</div>
     );
   }

@@ -48,6 +48,9 @@ mkvirtualenv venv
 Install Django  
 `pip install django`
 
+Allow CORS for development  
+`pip install django-cors-headers`
+
 To activate virtualenv next time   
 `source $WORKON_HOME/venv/bin/activate`
 

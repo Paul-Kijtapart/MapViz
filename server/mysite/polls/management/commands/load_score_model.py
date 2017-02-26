@@ -5,6 +5,7 @@ from .GeoUtils import GeoUtils
 # Models
 from polls.models import Incident, Coordinate, Institution, Zone, Score
 
+
 class Command(BaseCommand):
     help = 'Calculate score Table'
 

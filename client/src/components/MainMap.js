@@ -4,6 +4,7 @@ import {
 	TileLayer,
 	GeoJSON
 } from 'react-leaflet';
+import SentimentIcons from 'components/SentimentIcons.js'
 
 // JSON
 import AGRICULTURAL from 'maps/nw/AGRICULTURAL.json';
@@ -20,6 +21,7 @@ import UNZONED from 'maps/nw/UNZONED.json';
 
 
 class MainMap extends React.Component {
+
 	style_2(feature) {
 		var color = '#F0' + feature.properties.Name.length % 9 + 'F26';
 		return {
@@ -46,24 +48,25 @@ class MainMap extends React.Component {
 					opacity: 0
 				});
 			},
-			click: function(e) {
+			click: (e) => {
 				var id = e.target.feature.id;
 				var type = e.target.feature.properties.Name;
 				var coords = e.target.feature.geometry.coordinates[0];
 				this.props.onZoneSelected(id, type, coords);
-			}.bind(this)
+			}
 		});
 	}
+
 
 	render() {
 		const mapboxAccessToken = 'pk.eyJ1IjoibmFwb24iLCJhIjoiY2l6MzdneThwMDUwbjJ3bjE0a2QxanB1NyJ9.2zlCnkvfXLp5AAfoMbeQSQ';
 		const position = [49.207, -122.912];
 		const featureFn = (feature, layer) => {
-			this.setupInteraction(feature, layer)
+			this.setupInteraction(feature, layer);
 		};
 		return (
 			<Map id="main_map"
-				className="mainMap"
+				className="mainMap_full"
 				center={position}
 				zoom={13}
 				zoomControl={false}
@@ -131,6 +134,7 @@ class MainMap extends React.Component {
 	   					style={this.style_2}
 	   					onEachFeature={featureFn}
 	   				/>
+	   				<SentimentIcons />
 			</Map>);
 	}
 };
