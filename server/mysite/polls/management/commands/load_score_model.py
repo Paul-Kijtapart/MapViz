@@ -5,53 +5,73 @@ from .GeoUtils import GeoUtils
 # Models
 from polls.models import Incident, Coordinate, Institution, Zone, Score
 
-
 class Command(BaseCommand):
     help = 'Calculate score Table'
 
     def handle(self, *args, **options):
-        Score.objects.all().delete()
-        zones = Zone.objects.all()
-        for zone in zones:
-            zone_name = zone.name
-            p1 = (zone.center_lat, zone.center_lon)
-            score = 0
-            institutions = Institution.objects.all()
-            for ins in institutions:
-                # score = weight * distance
-                # weight is base on the type of institution
-                # TODO add type column to institution table
-                p2 = (ins.lat, ins.lon)
-                score += GeoUtils().distance(p1, p2)
+      Score.objects.all().delete()
+      scores = self.get_scores()
 
-            incidents = Incident.objects.filter(zone_name=zone_name)
-            years_to_crash_count_dict = \
-                self.get_year_to_crash_count_dict(incidents, zone_name)
+    def get_scores(self):
+      zones = Zone.objects.all()
+      scores = []
+      for zone in zones:
+          zone_name = zone.name
+          zone_coord = (zone.center_lat, zone.center_lon)
+          institution_score = self.get_inst_score_for_zone(zone_coord)
+          years_to_crash_count_dict = self.get_year_to_crash_score_dict(zone_name)
+          for year, crash_score in years_to_crash_count_dict.iteritems():
+              total_score = crash_score + institution_score
+              score = Score(name=zone_name, score=total_score, year=year)
+              scores.append(score)
 
-            for year in years_to_crash_count_dict:
-                score = Score(name=zone_name, score=years_to_crash_count_dict.get(year) + score, year=year)
-                pprint(score)
+      scale_min = 1
+      scale_max = 5
+      score_vals = map(lambda s: s.score,scores)
+      score_min = min(score_vals)
+      score_max = max(score_vals)
 
-                # for inc in incidents:
-                #     # score = weight * crash score
-                #     crash_score = 1 - inc.norm_count
-                #     score += crash_score
-                #     scoreObj = Score(name=zone_name, score=score, year=inc.year)
-                #     pprint(scoreObj)
+      for s in scores:
+        score = s.score
+        # newvalue = a * value + b. a = (max'-min')/(max-min) and b = max' - a * max
+        a = (scale_max - scale_min)/(score_max - score_min)
+        b = scale_max - a * score_max
+        score_scaled = a * score + b
+        s.score = round(score_scaled)
+        pprint(s)
+        s.save()
 
-    def get_year_to_crash_count_dict(self, incidents, zone_name):
-        '''
-        {yaer: crash_count}
-        :param incidents:
-        :param zone_name:
-        :return:
-        '''
-        res = dict()
-        for inc in incidents:
-            current_year = inc.year
-            current_score = 1 - inc.norm_count
-            if current_year in res and res[current_year] != None:
-                current_year[current_year] += current_score
-            else:
-                current_year[current_year] = current_score
-        return res
+    def get_inst_weights(self):
+      weights = dict()
+      weights['Sports Fields'] = 0.6
+      weights['Hospital'] = 0.8
+      weights['Police'] = 0.7
+      weights['School Public'] = 0.5
+      return weights
+
+    def get_inst_score_for_zone(self, zone_coord):
+      inst_weight = self.get_inst_weights();
+      institution_score = 0
+      institutions = Institution.objects.all()
+      for ins in institutions:
+          # score = weight * distance
+          # weight is base on the type of institution
+          inst_coord = (ins.lat, ins.lon)
+          distance = GeoUtils().distance(zone_coord, inst_coord)
+          institution_score += inst_weight[ins.institution_type] * distance
+      return institution_score
+
+    def get_year_to_crash_score_dict(self, zone_name):
+      incidents = Incident.objects.filter(zone_name=zone_name)
+      crash_scores = dict()
+      for inc in incidents:
+          current_year = inc.year
+          current_score = 1 - inc.norm_count
+          if current_year in crash_scores:
+              crash_scores[current_year] += current_score
+          else:
+              crash_scores[current_year] = current_score
+      for year, crash_score in crash_scores.iteritems():
+        # score = weight * crash_score
+        crash_scores[year] = 0.9 * crash_score
+      return crash_scores
