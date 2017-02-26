@@ -54,7 +54,7 @@ class Command(BaseCommand):
                     incidents.append(inc)
             self.stdout.write("Successfully Load Incidental Model")
 
-        print minCount, maxCount
+        print(minCount, maxCount)
 
         for inc in incidents:
             inc.norm_count = self.normalize(inc.count, minCount, maxCount)
