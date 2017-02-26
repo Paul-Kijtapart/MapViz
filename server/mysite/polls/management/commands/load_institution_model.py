@@ -21,18 +21,18 @@ ZONE_NAME_TO_POLYGON_PATH = \
 # Models
 from polls.models import Institution
 
-
 class Command(BaseCommand):
     help = 'Load initial institution data into Institution Table'
     with open(ZONE_NAME_TO_POLYGON_PATH, 'r') as read_file:
         zone_name_to_polygon_dict = pickle.load(read_file)
 
-    def parseInstitutions(self, reader, name_index, lat_index, lon_index):
-        for idx, row in enumerate(reader):
-            if idx == 3:
-                break
-
-            if idx != 0 and len(row) != 0:
+    def parseInstitutions(self, filename, quotechar, name_index, lat_index, lon_index):
+         with open(filename, 'rb') as csvfile:
+            # replace null byte
+            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar=quotechar)
+            # skip header
+            next(reader)
+            for idx, row in enumerate(reader):
                 ins = Institution()
                 ins.name = row[name_index]
                 ins.lon = float(row[lat_index])
@@ -44,22 +44,12 @@ class Command(BaseCommand):
                     pprint(ins)
                     ins.save()
 
-        self.stdout.write("Successfully Load Institution Model")
+                self.stdout.write("Successfully Load Institution Model")
 
 
     def handle(self, *args, **options):
-        with open(POLICE, 'rb') as csvfile:
-            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='|')
-            self.parseInstitutions(reader, 0, 33, 34)
-
-        with open(HOSPITALS, 'rb') as csvfile:
-            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='"')
-            self.parseInstitutions(reader, 0, 33, 34)
-
-        with open(SCHOOLS, 'rb') as csvfile:
-            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='"')
-            self.parseInstitutions(reader, 0, 33, 34)
-
-        with open(FIELDS, 'rb') as csvfile:
-            reader = csv.reader((x.replace('\0', '') for x in csvfile), delimiter=',', quotechar='"')
-            self.parseInstitutions(reader, 2, 0, 1)
+        Institution.objects.all().delete()
+        self.parseInstitutions(POLICE, None, 0, 33, 34)
+        self.parseInstitutions(HOSPITALS, '"', 0, 33, 34)
+        self.parseInstitutions(SCHOOLS, '"', 0, 33, 34)
+        self.parseInstitutions(FIELDS, '"', 2, 0, 1)

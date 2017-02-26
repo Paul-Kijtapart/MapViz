@@ -34,10 +34,12 @@ class Incident(models.Model):
     lon = models.FloatField()
     year = models.IntegerField()
     count = models.IntegerField()
+    norm_count = models.FloatField()
     zone_name = models.ForeignKey(Zone, on_delete=models.CASCADE)
 
     def __unicode__( self ):
-        return "INCIDENT: name {0} latlon ({1},{2}), year {3}, count{4}, zone_name{5}".format( self.name, self.lat, self.lon, self.year, self.count, self.zone_name.__str__())
+        return "INCIDENT: name {0} latlon ({1},{2}), year {3}, count{4}, norm_count{5}, zone_name{6}".format( self.name, self.lat, self.lon, self.year, self.count, self.norm_count, self.zone_name.__str__())
+
 
 class Institution(models.Model):
     name = models.CharField(max_length=30)
