@@ -15,7 +15,7 @@ class App extends React.Component {
     };
   }
 
-  onZoneSelected(id, type, coords) {
+  onZoneSelected(id, type, coords, building_type) {
     this.setState({
       zones: this.state.zones,
       selectedZone: {
@@ -30,12 +30,15 @@ class App extends React.Component {
     return (
       <div className="mapApp">
         <div className='mapSelection'>
-  				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
+  				<MainMap 
+            onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} 
+            selectedZone={this.state.selectedZone}
+          />
           <FieldSelection />
         </div>
         <div className="infoWrapper">
-         <InfoBox selectedZone={this.state.selectedZone} />
-         <div className="sentimentInfo">Sentiment Info</div>
+           <InfoBox selectedZone={this.state.selectedZone} />
+           <div className="sentimentInfo">Sentiment Info</div>
         </div>
 			</div>
     );

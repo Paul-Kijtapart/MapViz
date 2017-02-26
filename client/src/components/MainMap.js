@@ -2,9 +2,13 @@ import React from 'react';
 import {
 	Map,
 	TileLayer,
-	GeoJSON
+	GeoJSON,
+	LayersControl,
+	Marker,
+	Popup
 } from 'react-leaflet';
-import SentimentIcons from 'components/SentimentIcons.js'
+import SentimentIcons from 'components/SentimentIcons.js';
+import Control from 'react-leaflet-control';
 
 // JSON
 import AGRICULTURAL from 'maps/nw/AGRICULTURAL.json';
@@ -21,7 +25,6 @@ import UNZONED from 'maps/nw/UNZONED.json';
 
 
 class MainMap extends React.Component {
-
 	style_2(feature) {
 		var color = '#F0' + feature.properties.Name.length % 9 + 'F26';
 		return {
@@ -49,9 +52,10 @@ class MainMap extends React.Component {
 				});
 			},
 			click: (e) => {
-				var id = e.target.feature.id;
-				var type = e.target.feature.properties.Name;
-				var coords = e.target.feature.geometry.coordinates[0];
+				const id = e.target.feature.id;
+				const type = e.target.feature.properties.Name;
+				const coords = e.target.feature.geometry.coordinates[0];
+				const building_type = e.target.feature.Name;
 				this.props.onZoneSelected(id, type, coords);
 			}
 		});
@@ -64,6 +68,9 @@ class MainMap extends React.Component {
 		const featureFn = (feature, layer) => {
 			this.setupInteraction(feature, layer);
 		};
+		const building_type = this.props.selectedZone && this.props.selectedZone.type;
+		const zone_name = this.props.selectedZone && this.props.selectedZone.id;
+
 		return (
 			<Map id="main_map"
 				className="mainMap_full"
@@ -76,6 +83,16 @@ class MainMap extends React.Component {
 				boxZoom={false}
 				dragging={false}
 			>
+				<Control className="locationControl" position="topright" >
+					<p> Building Type: {(building_type)? building_type : 'selected building type'} </p>
+      			</Control>
+
+      			<LayersControl position="bottomright">
+					<LayersControl.Overlay name='Display Happiness Levels'>
+						<p> Happiness Levels </p>
+					</LayersControl.Overlay>
+      			</LayersControl>
+
 				<TileLayer
 	      				url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken}
 	   				id="mapbox.light"/>
