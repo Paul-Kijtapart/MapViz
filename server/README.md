@@ -56,3 +56,6 @@ To activate virtualenv next time
 cd server/mysite/
 python manage.py runserver
 ```
+
+### Test
+`python manage.py test polls.management.commands.GeoUtilsTest`
