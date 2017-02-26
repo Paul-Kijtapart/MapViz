@@ -52,7 +52,6 @@ $susy: (
 
 .infoBox {
 	@include span(4 of 12 last);
-	display: none;
 	background-color: $black_3;
 }
 

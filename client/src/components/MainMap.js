@@ -4,7 +4,6 @@ import {
 	TileLayer,
 	GeoJSON
 } from 'react-leaflet';
-import $ from 'jquery';
 import SentimentIcons from 'components/SentimentIcons.js'
 
 // JSON
@@ -54,11 +53,6 @@ class MainMap extends React.Component {
 				var type = e.target.feature.properties.Name;
 				var coords = e.target.feature.geometry.coordinates[0];
 				this.props.onZoneSelected(id, type, coords);
-
-				var mapSelections = $('.mapSelection_full');
-				mapSelections.removeClass('mapSelection_full');
-				mapSelections.addClass('mapSelection');
-				$('.infoBox').show();
 			}
 		});
 	}

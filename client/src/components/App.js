@@ -29,11 +29,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="mapApp">
-        <div className="mapSelection_full">
+        <div className={ (this.state.selectedZone)? 'mapSelection': 'mapSelection_full'}>
   				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
           <FieldSelection />
         </div>
-        <InfoBox selectedZone={this.state.selectedZone} />
+        {(this.state.selectedZone)? <InfoBox selectedZone={this.state.selectedZone} /> : null}
 			</div>
     );
   }
