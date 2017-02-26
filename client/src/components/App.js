@@ -33,7 +33,10 @@ class App extends React.Component {
   				<MainMap onZoneSelected={(id, type, coords) => {this.onZoneSelected(id, type, coords)}} />
           <FieldSelection />
         </div>
+        <div className="infoWrapper">
          <InfoBox selectedZone={this.state.selectedZone} />
+         <div className="sentimentInfo">Sentiment Info</div>
+        </div>
 			</div>
     );
   }
