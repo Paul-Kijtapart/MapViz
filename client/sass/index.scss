@@ -21,12 +21,27 @@ $susy: (columns: 12, gutters: 1 / 4, math: fluid, global-box-sizing: border-box)
 
 .mapApp {
     @include container(1140px);
+    min-height: 900px;
     @include clearfix;
 }
 
 .mapSelection {
     @include span(8 of 12);
     @include clearfix;
+
+    height: 100%;
+
+    #main_map {
+        height: 600px;
+
+        @include span(full);
+        @include clearfix;
+    }
+
+    .fieldSelection {
+        @include span(full);
+        @include clearfix;
+    }
 }
 
 .mapSelection_full {
@@ -35,24 +50,24 @@ $susy: (columns: 12, gutters: 1 / 4, math: fluid, global-box-sizing: border-box)
     @include span(full);
 }
 
-#main_map {
-    height: 600px;
-
-    @include span(full);
-    @include clearfix;
-}
-
-.fieldSelection {
-    @include span(full);
-    @include clearfix;
-}
-
-.infoBox {
-    height: 50%;
-
+.infoWrapper {
     @include span(4 of 12 last);
 
-    background-color: $black_3;
+    height: 100%;
+
+    .infoBox {
+        @include span(full);
+        height: 50%;
+        background-color: $blue_information_0;
+    }
+
+    .sentimentInfo {
+    	@include span(full);
+        margin-top: 10px;
+        margin-right: 0;
+        background-color: $blue_information_0;
+        height: 30%;
+    }
 }
 
 .sentiment-positive {
@@ -71,13 +86,4 @@ $susy: (columns: 12, gutters: 1 / 4, math: fluid, global-box-sizing: border-box)
 
 .fieldSelection {
     height: 100%;
-}
-
-.sentimentInfo {
-    margin-top: 10px;
-    width: 32.20339%;
-    float: right;
-    margin-right: 0;
-    background-color: #c6c6c6;
-    height: 30%;
 }
