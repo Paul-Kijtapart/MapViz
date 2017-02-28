@@ -11,20 +11,16 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      year: 2013,
+      year: 2011,
       zones: [],
       selectedZone: null
     };
   }
 
-  onZoneSelected(id, type, coords) {
+  onZoneSelected(selectedZone) {
     this.setState({
       zones: this.state.zones,
-      selectedZone: {
-        id: id,
-        type: type,
-        coords: coords
-      }
+      selectedZone
     });
   }
 

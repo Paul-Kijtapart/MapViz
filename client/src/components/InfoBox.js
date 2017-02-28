@@ -4,11 +4,13 @@ import $ from 'jquery';
 class InfoBox extends React.Component {
   render() {
     if (this.props.selectedZone) {
+      let selectedZone = this.props.selectedZone;
       return (
         <div className="infoBox">
-          ID: {this.props.selectedZone.id}<br />
-          Type: {this.props.selectedZone.type}<br />
-          Neighbourhood condition: {this.props.selectedZone.coords}
+          ID: {selectedZone.id}<br />
+          Type: {selectedZone.type}<br />
+          Neighbourhood condition: {selectedZone.cond}<br />
+          Score: {selectedZone.score}
         </div>
       );
     } else {

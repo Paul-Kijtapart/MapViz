@@ -59,10 +59,14 @@ class MainMap extends React.Component {
 	}
 
 	style_2(feature) {
-		var color = '#000000';
-		if (this.state.scores && this.state.scores[feature.id]) {
-			var score = this.state.scores[feature.id].score;
-			color = 'rgb(' + (255 - (score * 255/5)) + ',0,0)';
+		let color = '#000000';
+		let scores = this.state.scores;
+		if (scores && scores[feature.id]) {
+			let score = scores[feature.id].score;
+			let r = 0;
+			let g = score * 255/5;
+			let b = 0;
+			color = 'rgb(' + r + ',' + g + ',' + b + ')';
 		}
 		return {
 			fillColor: color,
@@ -89,17 +93,22 @@ class MainMap extends React.Component {
 				});
 			},
 			click: (e) => {
-				var id = e.target.feature.id;
-				var type = e.target.feature.properties.Name;
-				var score = this.state.scores[e.target.feature.id].score;
-				var dangerLevel = {
-					1: 'VERY SAFE',
-					2: 'SAFE',
+				let feature = e.target.feature;
+				let id = feature.id;
+				let type = feature.properties.Name;
+				let score = this.state.scores[feature.id].score;
+				let safeLevel = {
+					5: 'VERY SAFE',
+					4: 'SAFE',
 					3: 'NORMAL',
-					4: 'RISKY',
-					5: 'VERY DANGEROUS'
+					2: 'RISKY',
+					1: 'VERY DANGEROUS'
 				};
-				this.props.onZoneSelected(id, type, dangerLevel[score]);
+				let selectedZone = {
+					id, type, score,
+					cond:  safeLevel[score]
+				};
+				this.props.onZoneSelected(selectedZone);
 			}
 		});
 	}
@@ -120,9 +129,7 @@ class MainMap extends React.Component {
 				zoomControl={false}
 				touchZoom={false}
 				doubleClickZoom={false}
-				scrollWheelZoom={false}
 				boxZoom={false}
-				dragging={false}
 			>
 				<TileLayer
 	      				url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken}

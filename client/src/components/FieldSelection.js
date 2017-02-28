@@ -7,8 +7,8 @@ class FieldSelection extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: 2013,
-			reverseValue: 2013,
+			value: 2011,
+			reverseValue: 2011,
 			onYearChange: this.props.onYearChange
 		}
 
@@ -32,6 +32,8 @@ class FieldSelection extends React.Component {
 		} = this.state;
 
 		const labels = {
+			2011: '2011',
+			2012: '2012',
 			2013: '2013',
 			2014: '2014',
 			2015: '2015',
@@ -42,7 +44,7 @@ class FieldSelection extends React.Component {
 			<div className="fieldSelection">
 				<div className='slider-horizontal'>
 					<Slider
-		              min={2013}
+		              min={2011}
 		              max={2016}
 		              step={1}
 		              value={value}
