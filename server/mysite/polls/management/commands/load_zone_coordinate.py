@@ -27,6 +27,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         data_paths = self.get_data_absolute_paths()
+        Zone.objects.all().delete()
+        Coordinate.objects.all().delete()
         for path in data_paths:
             try:
                 with open(path, 'r') as json_file:
@@ -35,9 +37,6 @@ class Command(BaseCommand):
                     if (features == None):
                         self.stderr.write("Missing Features")
                         return
-
-                    Zone.objects.all.delete()
-                    Coordinate.objects.all.delete()
 
                     for f in features:
                         self.load_coordinate_row(f)

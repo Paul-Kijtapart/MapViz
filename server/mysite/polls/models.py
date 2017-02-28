@@ -23,9 +23,10 @@ class Coordinate(models.Model):
 class Score(models.Model):
     name = models.IntegerField()
     year = models.IntegerField()
+    raw_score = models.FloatField()
     score = models.IntegerField()
     def __str__(self):
-        return 'SCORE for zone: ' + str(self.name) + ' year: ' + str(self.year) + ' is ' + str(self.score)
+        return 'SCORE for zone: ' + str(self.name) + ' year: ' + str(self.year) + ' is ' + str(self.score) + ', raw score: ' + str(self.raw_score)
 
 
 class Incident(models.Model):
