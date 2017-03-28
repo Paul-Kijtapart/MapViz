@@ -26,27 +26,27 @@ Migrations
 
 ## Set up Tweepy
 1. Install tweepy and request
-`
+```
 pip install tweepy
 pip install requests
-`
+```
 
 2. Create server/mysite/polls/twitter_secret.py with 
-`
+```
 client_key = "insert_tweepy_client_key"
 secret_key = "insert_secret_client_key"
 access_token = "insert_access_token"
 access_token_secret = "insert_access_token_secret"
-`
+```
 
 ## Load initial data
 Ensure that you're in work directory
-`
+```
 python manage.py load_zone_coordinate.py
 python manage.py load_incident_model
 python manage.py load_institution_model.py
 python manage.py load_score_model.py
-`
+```
 
 # Server
 ## Setup
