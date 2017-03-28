@@ -1,6 +1,3 @@
-#MapViz
-# Backend
-
 # Database
 ## Run Locally
 ###Install DB adapter  
