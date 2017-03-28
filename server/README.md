@@ -1,5 +1,4 @@
-# Database
-## Run Locally
+# Set up Database
 ### Install DB adapter  
 `pip install psycopg2`
 
@@ -45,8 +44,7 @@ python manage.py load_institution_model.py
 python manage.py load_score_model.py
 ```
 
-# Server
-## Setup
+# Set up Server
 Install python if haven't already.  
 Install pip(https://pip.pypa.io/en/latest/installing/#installing-with-get-pip-py)  
 Install virtualenv `pip install virtualenv` and virtualenvwrapper `pip install virtualenvwrapper`
