@@ -1,9 +1,9 @@
 # Database
 ## Run Locally
-###Install DB adapter  
+### Install DB adapter  
 `pip install psycopg2`
 
-###Installing Postgre SQL on Mac:
+### Installing Postgre SQL on Mac:
 ```
 brew update
 brew install postgres
